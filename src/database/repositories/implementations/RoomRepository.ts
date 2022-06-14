@@ -1,9 +1,6 @@
-import { singleton } from "tsyringe";
-
 import { IRoom, Room } from "../../../app/schemas/rooms";
 import { ICreateRoomDTO, IRoomsRepository } from "../IRoomRepository";
 
-@singleton()
 class RoomRepository implements IRoomsRepository {
   async create({
     name,
@@ -23,6 +20,27 @@ class RoomRepository implements IRoomsRepository {
     });
 
     return room;
+  }
+
+  async findByLocation(location: string): Promise<IRoom> {
+    const room = await Room.findOne({ location });
+
+    return room;
+  }
+
+  async findAvailable(
+    couplebed_amount?: number,
+    singlebed_amount?: number
+  ): Promise<IRoom[]> {
+    const rooms = await Room.find({
+      ...(couplebed_amount ? { couplebed_amount } : {}),
+      ...(singlebed_amount ? { singlebed_amount } : {}),
+    })
+      .where("available")
+      .equals("true")
+      .exec();
+
+    return rooms;
   }
 }
 

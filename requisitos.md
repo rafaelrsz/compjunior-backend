@@ -2,21 +2,19 @@ API HOTELARIA
 
 # Cadastro de quarto
 
--Deve ser possível cadastrar um novo quarto
+X-Deve ser possível cadastrar um novo quarto
 
--Não deve ser possível cadastrar um quarto já existente
--O quarto deve ser cadastrado, por padrão, com disponibilidade
+X-Não deve ser possível cadastrar um quarto já existente
+X-O quarto deve ser cadastrado, por padrão, com disponibilidade
 
 -O cadastro só pode ser realizado por um usuário administrador
 
 
 # Listagem de quartos
 
-- Deve ser possível listar todos os quartos disponíveis
-- Deve ser possível listar todos os quartos disponíveis por sede
-- ***Deve ser possível listar todos os quartos disponíveis pela capacidade
-- Deve ser possível listar todos os quartos disponíveis pelo número de camas
-- Deve ser possível listar todos os quartos disponíveis pelo tipo de cama (solteiro ou casal)
+x- Deve ser possível listar todos os quartos disponíveis
+x- Deve ser possível listar todos os quartos disponíveis pelo tipo de cama (solteiro ou casal)
+- Deve ser possível listar todos os quartos por faixa de preço
 
 - O usuário não precisa estar logado no sistema
 

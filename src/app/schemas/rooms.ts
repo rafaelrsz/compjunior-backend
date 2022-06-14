@@ -7,7 +7,7 @@ interface IRoom {
   couplebed_amount: number;
   singlebed_amount: number;
   daily_price: number;
-  avaliable?: boolean;
+  available?: boolean;
   created_at?: Date;
   updated_at?: Date;
   id?: string;
@@ -39,7 +39,7 @@ const RoomSchema = new mongoose.Schema<IRoom>(
       type: Number,
       required: true,
     },
-    avaliable: {
+    available: {
       type: Boolean,
       default: true,
     },
@@ -49,4 +49,4 @@ const RoomSchema = new mongoose.Schema<IRoom>(
 
 const Room = mongoose.model("Rooms", RoomSchema);
 
-export { Room, IRoom };
+export { Room, IRoom, RoomSchema };

@@ -1,7 +1,9 @@
+import "reflect-metadata";
 import { inject, injectable } from "tsyringe";
 
-import { IRoomsRepository } from "../../database/repositories/IRoomRepository";
-import { IRoom } from "../schemas/rooms";
+import { IRoomsRepository } from "../../../database/repositories/IRoomRepository";
+import { AppError } from "../../../shared/errors/AppError";
+import { IRoom } from "../../schemas/rooms";
 
 interface IRequest {
   name: string;
@@ -27,6 +29,13 @@ class CreateRoomUseCase {
     daily_price,
     location,
   }: IRequest): Promise<IRoom> {
+    const userAlredyExists = await this.roomsRepository.findByLocation(
+      location
+    );
+
+    if (userAlredyExists) {
+      throw new AppError("Este apartamento já está cadastrado", 409);
+    }
     const room = await this.roomsRepository.create({
       name,
       description,

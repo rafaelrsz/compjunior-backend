@@ -1,15 +1,15 @@
 import { Router } from "express";
 
-import { CreateRoomController } from "../../../../app/useCases/CreateRoomController";
+import { CreateRoomController } from "../../../../app/useCases/createRoom/CreateRoomController";
+import { ListAvailableRoomController } from "../../../../app/useCases/listAvailableRoom/ListAvailableRoomController";
 
+const listAvailableRoomController = new ListAvailableRoomController();
 const createRoomController = new CreateRoomController();
 
 const roomRoutes = Router();
 
-roomRoutes.get("/", (request, response) => {
-  response.json({ message: "hello" });
-});
+roomRoutes.get("/", listAvailableRoomController.handle);
 
-roomRoutes.post("/a", createRoomController.handle);
+roomRoutes.post("/", createRoomController.handle);
 
 export { roomRoutes };
