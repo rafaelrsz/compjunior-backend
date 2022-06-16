@@ -1,4 +1,4 @@
-import { IRoom, Room } from "../../app/schemas/rooms";
+import { IRoom } from "../../app/schemas/Room";
 
 interface ICreateRoomDTO {
   name: string;
@@ -7,6 +7,7 @@ interface ICreateRoomDTO {
   couplebed_amount: number;
   singlebed_amount: number;
   daily_price: number;
+  images?: string[];
 }
 
 interface IRoomsRepository {
@@ -23,6 +24,9 @@ interface IRoomsRepository {
     couplebed_amount?: number,
     singlebed_amount?: number
   ): Promise<IRoom[]>;
+  findById(id: string): Promise<IRoom>;
+  updateAvailable(id: string, available: boolean): Promise<void>;
+  updateRoomImages(id: string, images: string[]): Promise<void>;
 }
 
 export { ICreateRoomDTO, IRoomsRepository };

@@ -20,7 +20,7 @@ class ListAvailableRoomController {
       couplebed_amount: intcouplebed_amount,
     });
 
-    return response.json(availableRooms);
+    return response.status(200).json(availableRooms);
   }
 }
 

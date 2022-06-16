@@ -1,4 +1,4 @@
-import { IRoom, Room } from "../../../app/schemas/rooms";
+import { IRoom, Room } from "../../../app/schemas/Room";
 import { ICreateRoomDTO, IRoomsRepository } from "../IRoomRepository";
 
 class RoomRepository implements IRoomsRepository {
@@ -41,6 +41,28 @@ class RoomRepository implements IRoomsRepository {
       .exec();
 
     return rooms;
+  }
+
+  async findById(id: string): Promise<IRoom> {
+    const room = await Room.findOne({ id });
+
+    return room;
+  }
+
+  async updateAvailable(id: string, available: boolean): Promise<void> {
+    await Room.findOneAndUpdate({ id, available });
+  }
+
+  async updateRoomImages(id: string, images: string[]): Promise<void> {
+    await Room.findOneAndUpdate(
+      { id },
+      {
+        $set: {
+          images,
+        },
+      },
+      { new: true }
+    );
   }
 }
 

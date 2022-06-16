@@ -1,9 +1,9 @@
 import "reflect-metadata";
 import { inject, injectable } from "tsyringe";
 
-import { IRoomsRepository } from "../../../database/repositories/IRoomRepository";
-import { AppError } from "../../../shared/errors/AppError";
-import { IRoom } from "../../schemas/rooms";
+import { IRoomsRepository } from "../../../../database/repositories/IRoomRepository";
+import { AppError } from "../../../../shared/errors/AppError";
+import { IRoom } from "../../../schemas/Room";
 
 interface IRequest {
   name: string;
@@ -34,7 +34,7 @@ class CreateRoomUseCase {
     );
 
     if (userAlredyExists) {
-      throw new AppError("Este apartamento já está cadastrado", 409);
+      throw new AppError("This apartment alredy exists", 409);
     }
     const room = await this.roomsRepository.create({
       name,

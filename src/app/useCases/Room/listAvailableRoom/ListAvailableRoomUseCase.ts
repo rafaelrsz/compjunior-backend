@@ -1,8 +1,8 @@
 import "reflect-metadata";
 import { inject, injectable } from "tsyringe";
 
-import { IRoomsRepository } from "../../../database/repositories/IRoomRepository";
-import { IRoom } from "../../schemas/rooms";
+import { IRoomsRepository } from "../../../../database/repositories/IRoomRepository";
+import { IRoom } from "../../../schemas/Room";
 
 interface IRequest {
   couplebed_amount?: number;

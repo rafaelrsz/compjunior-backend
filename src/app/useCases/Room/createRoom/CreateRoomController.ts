@@ -4,12 +4,7 @@ import { container } from "tsyringe";
 import { CreateRoomUseCase } from "./CreateRoomUseCase";
 
 class CreateRoomController {
-  opa(request: Request, response: Response): Response {
-    return response.send();
-  }
-
   async handle(request: Request, response: Response): Promise<Response> {
-    const createRoomUseCase = container.resolve(CreateRoomUseCase);
     const {
       name,
       description,
@@ -18,6 +13,8 @@ class CreateRoomController {
       daily_price,
       location,
     } = request.body;
+
+    const createRoomUseCase = container.resolve(CreateRoomUseCase);
 
     const room = await createRoomUseCase.execute({
       name,

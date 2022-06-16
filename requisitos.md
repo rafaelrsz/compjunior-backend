@@ -31,14 +31,14 @@ x- Deve ser possível listar todos os quartos disponíveis pelo tipo de cama (so
 
 # Reserva de quarto
 
-- Deve ser possível reservar um quarto
+x- Deve ser possível reservar um quarto
 
-- A reserva deve ter duração mínima de 24 horas.
+x- A reserva deve ter duração mínima de 24 horas.
 - Não deve ser possível cadastrar uma reserva caso já exista uma aberta para o mesmo usuário
-- Não deve ser possível cadastrar uma reserva caso já exista uma aberto para o mesmo quarto
-- Ao realizar uma reserva, o status do quarto deverá ser alterado para indisponível
+x- Não deve ser possível cadastrar uma reserva caso já exista uma aberto para o mesmo quarto
+x- Ao realizar uma reserva, o status do quarto deverá ser alterado para indisponível
 
-- O usuário deve estar logado na aplicação reservar um quarto
+x- O usuário deve estar logado na aplicação reservar um quarto
 
 
 # Desalocação de quarto 
@@ -54,15 +54,6 @@ x- Deve ser possível listar todos os quartos disponíveis pelo tipo de cama (so
 - O usuário deve estar logado na aplicação
 
 
-# Listagem de Alugueis para usuário
-
-
-- Deve ser possível realizar a listagem de todas as reservas do usuário.
-
-- O usuário deve estar logado na aplicação
-
-
-// a especificar
 # Recuperar Senha
 
 **RF**

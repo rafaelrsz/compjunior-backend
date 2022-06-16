@@ -1,5 +1,7 @@
-import { RoomRepositoryInMemory } from "../../../database/repositories/in-memory/RoomRepositoryInMemory";
-import { AppError } from "../../../shared/errors/AppError";
+import mongoose from "mongoose";
+
+import { RoomRepositoryInMemory } from "../../../../database/repositories/in-memory/RoomRepositoryInMemory";
+import { AppError } from "../../../../shared/errors/AppError";
 import { CreateRoomUseCase } from "./CreateRoomUseCase";
 
 let roomRepositoryInMemory: RoomRepositoryInMemory;
@@ -10,6 +12,12 @@ describe("Create Room", () => {
     roomRepositoryInMemory = new RoomRepositoryInMemory();
     createRoomUseCase = new CreateRoomUseCase(roomRepositoryInMemory);
   });
+
+  afterEach(async () => {
+    await mongoose.disconnect();
+    await mongoose.connection.close();
+  });
+
   it("shoud be able to create a room", async () => {
     const room = await createRoomUseCase.execute({
       name: "quarto1",

@@ -1,4 +1,6 @@
-import { RoomRepositoryInMemory } from "../../../database/repositories/in-memory/RoomRepositoryInMemory";
+import mongoose from "mongoose";
+
+import { RoomRepositoryInMemory } from "../../../../database/repositories/in-memory/RoomRepositoryInMemory";
 import { ListAvailableRoomUseCase } from "./ListAvailableRoomUseCase";
 
 let roomsRepository: RoomRepositoryInMemory;
@@ -8,6 +10,11 @@ describe("List Available Rooms", () => {
   beforeEach(() => {
     roomsRepository = new RoomRepositoryInMemory();
     listAvailableRoomUseCase = new ListAvailableRoomUseCase(roomsRepository);
+  });
+
+  afterEach(async () => {
+    await mongoose.disconnect();
+    await mongoose.connection.close();
   });
 
   it("shoud be able to list all available rooms", async () => {

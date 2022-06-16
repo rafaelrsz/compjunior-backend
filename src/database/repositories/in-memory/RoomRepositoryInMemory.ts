@@ -1,6 +1,4 @@
-import { Document } from "mongoose";
-
-import { IRoom, Room } from "../../../app/schemas/rooms";
+import { IRoom, Room } from "../../../app/schemas/Room";
 import { ICreateRoomDTO, IRoomsRepository } from "../IRoomRepository";
 
 class RoomRepositoryInMemory implements IRoomsRepository {
@@ -47,6 +45,16 @@ class RoomRepositoryInMemory implements IRoomsRepository {
     });
 
     return allRooms;
+  }
+
+  async findById(id: string): Promise<IRoom> {
+    return this.rooms.find((room) => room.id === id);
+  }
+
+  async updateAvailable(id: string, available: boolean): Promise<void> {
+    const findIndex = this.rooms.findIndex((room) => room.id === id);
+
+    this.rooms[findIndex].available = available;
   }
 }
 
