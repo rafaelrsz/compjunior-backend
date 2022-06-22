@@ -13,5 +13,5 @@ This project was developed with educational pourpose
 2. Run ```yarn dev``` in the root folder
 
 ## Documentation
-1. All API Routes are fully documented at "http://localhost:3333/api-docs/#/".
+1. All API Routes are fully with documented with Swagger UI at "http://localhost:3333/api-docs/#/".
 
