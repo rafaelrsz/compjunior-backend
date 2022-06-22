@@ -10,6 +10,7 @@ interface IRequest {
   name: string;
   password: string;
   email: string;
+  avatar_file?: string;
 }
 
 @injectable()
@@ -18,7 +19,12 @@ class CreateUserUseCase {
     @inject("UsersRepository")
     private usersRepository: IUsersRepository
   ) {}
-  async execute({ name, password, email }: IRequest): Promise<IUser> {
+  async execute({
+    name,
+    password,
+    email,
+    avatar_file,
+  }: IRequest): Promise<IUser> {
     const userAlredyExists = await this.usersRepository.findByEmail(email);
 
     if (userAlredyExists) {
@@ -31,6 +37,7 @@ class CreateUserUseCase {
       name,
       password: passwordHash,
       email,
+      avatar: avatar_file,
     });
 
     return user;

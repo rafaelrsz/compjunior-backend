@@ -29,14 +29,14 @@ class UserRepository implements IUsersRepository {
   }
 
   async findById(id: string): Promise<IUser> {
-    const user = await User.findOne({ id });
+    const user = await User.findById(id);
 
     return user;
   }
 
   async updateAvatar(id: string, avatar_file: string): Promise<void> {
     await User.findOneAndUpdate(
-      { id },
+      { _id: id },
       {
         $set: {
           avatar: avatar_file,
@@ -51,7 +51,6 @@ class UserRepository implements IUsersRepository {
   }
 
   async updatePassword(id: string, password: string): Promise<void> {
-    console.log(password);
     await User.findOneAndUpdate(
       { _id: id },
       {

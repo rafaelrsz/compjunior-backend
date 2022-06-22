@@ -32,12 +32,12 @@ class RoomRepository implements IRoomsRepository {
     couplebed_amount?: number,
     singlebed_amount?: number
   ): Promise<IRoom[]> {
-    const rooms = await Room.find({
-      ...(couplebed_amount ? { couplebed_amount } : {}),
-      ...(singlebed_amount ? { singlebed_amount } : {}),
-    })
-      .where("available")
+    const rooms = await Room.where("available")
       .equals("true")
+      .where("singlebed_amount")
+      .gte(singlebed_amount)
+      .where("couplebed_amount")
+      .gte(couplebed_amount)
       .exec();
 
     return rooms;

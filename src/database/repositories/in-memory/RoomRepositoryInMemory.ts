@@ -56,6 +56,12 @@ class RoomRepositoryInMemory implements IRoomsRepository {
 
     this.rooms[findIndex].available = available;
   }
+
+  async updateRoomImages(id: string, images: string[]): Promise<void> {
+    const room = await this.findById(id);
+
+    room.images = images;
+  }
 }
 
 export { RoomRepositoryInMemory };

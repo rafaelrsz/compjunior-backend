@@ -1,21 +1,324 @@
 {
   "openapi": "3.0.0",
   "info": {
-    "title": "Hotel Documentation",
+    "title": "Hotel API Documentation",
     "description": "This is an API Rest",
     "version": "1.00",
     "contact": {
-      "email": "rafa.rsouz@gmail.com"
+      "email": "rafael.souza@compjunior.com"
     }
   },
   "paths": {
-    "/categories": {
+    "/sessions": {
       "post": {
         "tags": [
-          "Category"
+          "Session"
         ],
-        "summary": "Create a category",
-        "description": "Create a new category",
+        "summary": "Authentication user",
+        "description": "Authentication user",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "email": {
+                    "type": "string"
+                  },
+                  "password": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success"
+          },
+          "400": {
+            "description": "Email or password incorrect!"
+          }
+        }
+      }
+    },
+    "/users": {
+      "post": {
+        "tags": [
+          "User"
+        ],
+        "summary": "Create a user",
+        "description": "Create a new user",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "name": {
+                    "type": "string"
+                  },
+                  "email": {
+                    "type": "string"
+                  },
+                  "password": {
+                    "type": "string"
+                  },
+                  "avatar": {
+                    "type": "string",
+                    "format": "binary"
+                  }
+                },
+                "required": [
+                  "name",
+                  "email",
+                  "password"
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "User created"
+          },
+          "409": {
+            "description": "User alredy exists"
+          }
+        }
+      }
+    },
+    "/users/import": {
+      "post": {
+        "tags": [
+          "User"
+        ],
+        "summary": "Import users from csv",
+        "description": "Import users from csv",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "file": {
+                    "type": "string",
+                    "format": "binary"
+                  }
+                },
+                "required": [
+                  "file"
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Users created"
+          }
+        }
+      }
+    },
+    "/users/avatar": {
+      "patch": {
+        "tags": [
+          "User"
+        ],
+        "summary": "Update a user avatar",
+        "description": "Update a user avatar",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "avatar": {
+                    "type": "string",
+                    "format": "binary"
+                  }
+                },
+                "required": [
+                  "avatar"
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Success"
+          }
+        }
+      }
+    },
+    "/users/delete/{id}": {
+      "delete": {
+        "tags": [
+          "User"
+        ],
+        "summary": "Delete a user",
+        "description": "Delete a user",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "User id",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "User deleted"
+          },
+          "404": {
+            "description": "User not found"
+          }
+        }
+      }
+    },
+    "/password/forgot": {
+      "post": {
+        "tags": [
+          "Password"
+        ],
+        "summary": "Send password reset email",
+        "description": "Send password reset email",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "email": {
+                    "type": "string"
+                  }
+                },
+                "example": {
+                  "email": "email@sample.com"
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Mail sent"
+          },
+          "404": {
+            "description": "User not found"
+          }
+        }
+      }
+    },
+    "/password/reset": {
+      "post": {
+        "tags": [
+          "Password"
+        ],
+        "summary": "Reset password",
+        "description": "Reset password",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "password": {
+                    "type": "string"
+                  }
+                },
+                "example": {
+                  "password": "passwordexample"
+                }
+              }
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "token",
+            "in": "query",
+            "description": "Bearer token for reset",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Mail sent"
+          },
+          "404": {
+            "description": "User not found"
+          }
+        }
+      }
+    },
+    "/rooms": {
+      "get": {
+        "tags": [
+          "Room"
+        ],
+        "summary": "List available rooms",
+        "description": "List available rooms",
+        "parameters": [
+          {
+            "name": "singlebed_amount",
+            "in": "query",
+            "description": "Amount of single beds",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "couplebed_amount",
+            "in": "query",
+            "description": "Amount of couple beds",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ]
+      },
+      "post": {
+        "tags": [
+          "Room"
+        ],
+        "summary": "Create a room",
+        "description": "Create a new room",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
         "requestBody": {
           "content": {
             "application/json": {
@@ -27,11 +330,27 @@
                   },
                   "description": {
                     "type": "string"
+                  },
+                  "couplebed_amount": {
+                    "type": "string"
+                  },
+                  "singlebed_amount": {
+                    "type": "string"
+                  },
+                  "daily_price": {
+                    "type": "string"
+                  },
+                  "location": {
+                    "type": "string"
                   }
                 },
                 "example": {
-                  "name": "category name sample",
-                  "description": "category description sample"
+                  "name": "room name sample",
+                  "description": "description name sample",
+                  "couplebed_amout": "1",
+                  "singlebed_amount": "1",
+                  "daily_price": "100",
+                  "location": "ap 101"
                 }
               }
             }
@@ -39,95 +358,141 @@
         },
         "responses": {
           "201": {
-            "description": "Category created"
+            "description": "Room created"
           },
-          "500": {
-            "description": "Category alredy exists"
-          }
-        }
-      },
-      "get": {
-        "tags": [
-          "Category"
-        ],
-        "sumary": "List all categories",
-        "description": "List all categories",
-        "responses": {
-          "200": {
-            "description": "Success",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "array",
-                  "items": {
-                    "type": "object",
-                    "properties": {
-                      "name": {
-                        "type": "string"
-                      },
-                      "description": {
-                        "type": "string"
-                      }
-                    }
-                  }
-                }
-              }
-            }
+          "409": {
+            "description": "Room alredy exists"
           }
         }
       }
     },
-    "/categories/import": {
-      "post": {
+    "/rooms/images/{id}": {
+      "patch": {
         "tags": [
-          "Category"
+          "Room"
         ],
-        "summary": "Upload new category",
-        "description": "Upload new category",
+        "summary": "Update room images",
+        "description": "Update room images",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Room id",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
         "requestBody": {
           "content": {
             "multipart/form-data": {
               "schema": {
                 "type": "object",
                 "properties": {
-                  "file": {
-                    "type": "string",
-                    "format": "binary"
+                  "images": {
+                    "type": "array",
+                    "items": {
+                      "type": "string",
+                      "format": "binary"
+                    }
                   }
-                }
+                },
+                "required": [
+                  "images"
+                ]
               }
             }
           }
         },
         "responses": {
-          "201": {
-            "description": "Created"
+          "204": {
+            "description": "Success"
           }
         }
       }
     },
-    "/specifications": {
+    "/rentals/": {
       "post": {
         "tags": [
-          "Specifications"
+          "Rental"
         ],
-        "summary": "Create a specification",
-        "description": "Create a specification",
+        "summary": "Create a rental",
+        "description": "Create a new rental",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
         "requestBody": {
           "content": {
-            "application/json": {
+            "multipart/form-data": {
               "schema": {
-                "$ref": "#/definitions/Specification"
+                "type": "object",
+                "properties": {
+                  "room_id": {
+                    "type": "string"
+                  },
+                  "start_date": {
+                    "type": "Date"
+                  },
+                  "expected_return_date": {
+                    "type": "Date"
+                  }
+                },
+                "required": [
+                  "room_id",
+                  "start_date",
+                  "expected_return_date"
+                ]
               }
             }
           }
         },
         "responses": {
           "201": {
-            "description": "Created"
+            "description": "Rental created"
           },
-          "500": {
-            "description": "Specification alredy exists!"
+          "400": {
+            "description": "Error"
+          }
+        }
+      }
+    },
+    "/rentals/devolution/{id}": {
+      "post": {
+        "tags": [
+          "Rental"
+        ],
+        "summary": "Create a rental",
+        "description": "Create a new rental",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Rental id",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Rental created"
+          },
+          "400": {
+            "description": "Error"
           }
         }
       }
@@ -143,6 +508,15 @@
         "description": {
           "type": "string"
         }
+      }
+    }
+  },
+  "components": {
+    "securitySchemes": {
+      "bearerAuth": {
+        "type": "http",
+        "scheme": "bearer",
+        "bearerFormat": "JWT"
       }
     }
   }

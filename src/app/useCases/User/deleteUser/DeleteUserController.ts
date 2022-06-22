@@ -11,7 +11,7 @@ class DeleteUserController {
 
     await deleteUserUseCase.execute(id as string);
 
-    return response.status(201).send();
+    return response.status(200).send();
   }
 }
 

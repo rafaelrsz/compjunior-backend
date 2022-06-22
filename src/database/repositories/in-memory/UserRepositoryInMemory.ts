@@ -18,6 +18,16 @@ class UserRepositoryInMemory implements IUsersRepository {
   async findById(id: string): Promise<IUser> {
     return this.users.find((user) => user.id === id);
   }
+
+  async updateAvatar(id: string, avatar_file: string): Promise<void> {
+    throw new Error("Method not implemented.");
+  }
+  async deleteUser(id: string): Promise<void> {
+    throw new Error("Method not implemented.");
+  }
+  async updatePassword(id: string, password: string): Promise<void> {
+    throw new Error("Method not implemented.");
+  }
 }
 
 export { UserRepositoryInMemory };

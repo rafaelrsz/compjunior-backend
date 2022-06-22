@@ -1,5 +1,4 @@
 import { Request, Response } from "express";
-import { verify } from "jsonwebtoken";
 import { container } from "tsyringe";
 
 import { SendForgotPasswordMailUseCase } from "./SendForgotPasswordMailUseCase";
@@ -12,15 +11,13 @@ class SendForgotPasswordMailController {
 
     const [, token] = tokenFull.split(" ");
 
-    console.log(token);
-
     const sendForgotPasswordMailUseCase = container.resolve(
       SendForgotPasswordMailUseCase
     );
 
     await sendForgotPasswordMailUseCase.execute(email, token);
 
-    return response.send();
+    return response.status(200).send();
   }
 }
 

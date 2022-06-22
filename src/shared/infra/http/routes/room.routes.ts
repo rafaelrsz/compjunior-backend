@@ -5,6 +5,7 @@ import { CreateRoomController } from "../../../../app/useCases/Room/createRoom/C
 import { ListAvailableRoomController } from "../../../../app/useCases/Room/listAvailableRoom/ListAvailableRoomController";
 import { UpdateRoomImageController } from "../../../../app/useCases/Room/updateRoomImage/UpdateRoomImageController";
 import uploadConfig from "../../../../config/upload";
+import { ensureAdmin } from "../middlewares/ensureAdmin";
 import { ensureAuthenticated } from "../middlewares/ensureAuthenticated";
 
 const listAvailableRoomController = new ListAvailableRoomController();
@@ -17,11 +18,17 @@ const roomRoutes = Router();
 
 roomRoutes.get("/", listAvailableRoomController.handle);
 
-roomRoutes.post("/", ensureAuthenticated, createRoomController.handle);
+roomRoutes.post(
+  "/",
+  ensureAuthenticated,
+  ensureAdmin,
+  createRoomController.handle
+);
 
 roomRoutes.patch(
   "/images/:id",
   ensureAuthenticated,
+  ensureAdmin,
   uploadImages.array("images"),
   updateRoomImage.handle
 );

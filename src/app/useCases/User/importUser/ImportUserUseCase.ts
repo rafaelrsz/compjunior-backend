@@ -1,3 +1,4 @@
+import { hash } from "bcryptjs";
 import { parse as csvParse } from "csv-parse";
 import fs from "fs";
 import { inject, injectable } from "tsyringe";
@@ -53,10 +54,17 @@ class ImportUserUseCase {
     users.map(async (user) => {
       const { name, password, email, admin } = user;
 
-      const existCategory = await this.usersRepository.findByEmail(email);
+      const passwordHash = await hash(password, 8);
 
-      if (!existCategory) {
-        await this.usersRepository.create({ name, password, email, admin });
+      const userExits = await this.usersRepository.findByEmail(email);
+
+      if (!userExits) {
+        await this.usersRepository.create({
+          name,
+          password: passwordHash,
+          email,
+          admin,
+        });
       }
     });
   }

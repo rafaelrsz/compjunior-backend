@@ -34,7 +34,7 @@ class CreateRoomUseCase {
     );
 
     if (userAlredyExists) {
-      throw new AppError("This apartment alredy exists", 409);
+      throw new AppError("This room alredy exists", 409);
     }
     const room = await this.roomsRepository.create({
       name,

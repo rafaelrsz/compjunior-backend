@@ -2,7 +2,6 @@ import { resolve } from "path";
 import { inject, injectable } from "tsyringe";
 
 import { IUsersRepository } from "../../../../database/repositories/IUserRepository";
-import { IDateProvider } from "../../../../shared/container/providers/DateProvider/IDateProvider";
 import { IMailProvider } from "../../../../shared/container/providers/MailProvider/IMailProvider";
 import { AppError } from "../../../../shared/errors/AppError";
 
@@ -11,8 +10,6 @@ class SendForgotPasswordMailUseCase {
   constructor(
     @inject("UsersRepository")
     private usersRepository: IUsersRepository,
-    @inject("DayjsDateProvider")
-    private dateProvider: IDateProvider,
     @inject("EtherealMailProvider")
     private mailProvider: IMailProvider
   ) {}
@@ -30,7 +27,7 @@ class SendForgotPasswordMailUseCase {
     );
 
     if (!user) {
-      throw new AppError("User does not exists!");
+      throw new AppError("User not found!", 404);
     }
 
     const variables = {

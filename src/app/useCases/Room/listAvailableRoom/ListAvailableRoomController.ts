@@ -8,8 +8,12 @@ class ListAvailableRoomController {
   async handle(request: Request, response: Response): Promise<Response> {
     const { singlebed_amount, couplebed_amount } = request.query;
 
-    const intsinglebed_amount = parseInt(singlebed_amount as string);
-    const intcouplebed_amount = parseInt(couplebed_amount as string);
+    const intsinglebed_amount = singlebed_amount
+      ? parseInt(singlebed_amount as string)
+      : 0;
+    const intcouplebed_amount = couplebed_amount
+      ? parseInt(couplebed_amount as string)
+      : 0;
 
     const listAvailableRoomsUseCase = container.resolve(
       ListAvailableRoomUseCase

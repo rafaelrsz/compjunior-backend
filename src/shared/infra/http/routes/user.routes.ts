@@ -6,6 +6,7 @@ import { DeleteUserController } from "../../../../app/useCases/User/deleteUser/D
 import { ImportCategoryController } from "../../../../app/useCases/User/importUser/ImportUserController";
 import { UpdateUserAvatarController } from "../../../../app/useCases/User/updateUserAvatar/UpdateUserAvatarController";
 import uploadConfig from "../../../../config/upload";
+import { ensureAdmin } from "../middlewares/ensureAdmin";
 import { ensureAuthenticated } from "../middlewares/ensureAuthenticated";
 
 const createUserController = new CreateUserController();
@@ -21,7 +22,11 @@ const upload = multer({
   dest: "./tmp",
 });
 
-userRoutes.post("/", createUserController.handle);
+userRoutes.post(
+  "/",
+  uploadAvatar.single("avatar"),
+  createUserController.handle
+);
 
 userRoutes.patch(
   "/avatar",
@@ -33,6 +38,7 @@ userRoutes.patch(
 userRoutes.delete(
   "/delete/:id",
   ensureAuthenticated,
+  ensureAdmin,
   deleteUserController.handle
 );
 
